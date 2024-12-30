@@ -1,0 +1,2 @@
+I am learning async js
+After this I will learn promise
