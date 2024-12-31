@@ -132,7 +132,7 @@ app.post("/signin", (req, res) => {
 });
 
 // Middleware for post
-function postRestriction(req, res, next) {
+function auth(req, res, next) {
   const sessionToken = req.headers["token"];
   console.log(sessionToken);
   const token = jwt.verify(sessionToken, JWT_SECRET);
@@ -141,10 +141,11 @@ function postRestriction(req, res, next) {
   const user = users.find((user) => user.email == email);
   console.log(user);
   if (!user) return res.json({ message: "Signin please" });
+  req.email = email;
   next();
 }
 
-app.use(postRestriction);
+app.use(auth);
 
 app.get("/post", (req, res) => {
   res.send(`<h3>Hurrah! Authentication Done.</h3>`);
