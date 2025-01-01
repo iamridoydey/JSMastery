@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth App</title>
+  </head>
+  <body>
+    <h1>Auth App</h1>
+    <ul>
+      <li id="signup"><a href="/signup">SignUP</a></li>
+      <li id="signin"><a href="/signin">SignIN</a></li>
+      <li id="posts"><a href="/posts">See the Posts</a></li>
+    </ul>
+
+    <script>
+      const signin = document.querySelector("#signin");
+      const signup = document.querySelector("#signup");
+      const posts = document.querySelector("#posts");
+
+      const token = localStorage.getItem("token");
+      if (token) {
+        signin.style.display = "none";
+        signup.style.display = "none";
+      } else {
+        posts.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
