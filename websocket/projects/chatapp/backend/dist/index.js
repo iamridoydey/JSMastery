@@ -9,7 +9,7 @@ wss.on("connection", (ws) => {
     ws.on("message", (message) => {
         for (let i = 0; i < allSockets.length; i++) {
             if (allSockets[i] != ws) {
-                allSockets[i].send(`User#${i + 1}: ${message.toString()}`);
+                allSockets[i].send(`${message.toString()}`);
             }
         }
     });
