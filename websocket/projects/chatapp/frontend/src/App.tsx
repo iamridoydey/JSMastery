@@ -50,8 +50,8 @@ function App() {
         </h1>
         <hr />
 
-        <div className="message_container border-2 mt-4 h-[640px] relative">
-          <div className="messages border-2 overflow-y-scroll mb-8">
+        <div className="message_container border-2 mt-4 h-[580px] overflow-y-scroll">
+          <div className="messages">
             <ul className="message_parent flex flex-col h-full">
               {messages.map((message, index) => (
                 <li
@@ -67,9 +67,10 @@ function App() {
               ))}
             </ul>
           </div>
-          <form
+        </div>
+        <form
             onSubmit={handleOnSubmit}
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex gap-2 w-full p-4 bg-slate-800"
+            className="bottom-0 flex gap-2 w-full border-2 border-transparenet p-4 bg-slate-800"
           >
             <input
               ref={inputRef}
@@ -85,7 +86,6 @@ function App() {
               send
             </button>
           </form>
-        </div>
       </section>
     </>
   );

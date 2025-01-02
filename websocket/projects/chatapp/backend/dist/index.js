@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = require("ws");
 const wss = new ws_1.WebSocketServer({ port: 8080 });
-const allSockets = [];
+let allSockets = [];
 wss.on("connection", (ws) => {
     console.log("Connected");
     allSockets.push(ws);
@@ -12,5 +12,8 @@ wss.on("connection", (ws) => {
                 allSockets[i].send(`${message.toString()}`);
             }
         }
+    });
+    ws.on("disconnect", (socket) => {
+        allSockets = allSockets.filter((s) => s != socket);
     });
 });
