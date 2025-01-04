@@ -3,6 +3,7 @@ const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const axios = require("axios")
 
 async function startServer() {
   const app = express();
@@ -15,14 +16,12 @@ async function startServer() {
       }
         
       type Query{
-        getTodos: [Todos]
+        getTodos: [Todo]
       }
       `,
     resolvers: {
       Query: {
-        getTodos: ()=> [
-          {}
-        ]
+        getTodos: async () => (await axios.get("https://jsonplaceholder.typicode.com/todos")).data
       }
     },
   });
@@ -33,7 +32,9 @@ async function startServer() {
   await server.start();
 
   app.use("/graphql", expressMiddleware(server));
-  app.listen(3000, () => {
-    console.log(`Server started at http://localhost:${300}`);
+  app.listen(8000, () => {
+    console.log(`Server started at http://localhost:${8000}`);
   });
 }
+
+startServer()
