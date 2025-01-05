@@ -1,6 +1,8 @@
-import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import express, { Request, Response } from "express";
+import createGraphqlServer from "./graphql";
+import { verify } from "node:crypto";
+import { UserService } from "./services/user";
 
 async function init() {
   const app = express();
@@ -9,37 +11,21 @@ async function init() {
   // Body parser
   app.use(express.json());
 
-  // Create graphql server
-  const gqlServer = new ApolloServer({
-    // Schema
-    typeDefs: `
-      type User {
-        name: String!
-      }
-
-      type Query {
-        hello: String
-        hey(name: String!): String
-      }
-    `,
-
-    resolvers: {
-      Query: {
-        hello: () => "Hello graphql",
-        hey: (parent, { name }: { name: string }) =>
-          `Hello, ${name}. How are you?`,
-      },
-    },
-  });
-
-  // Start the graphql server
-  await gqlServer.start();
-
   app.get("/", (req: Request, res: Response) => {
     res.send("<h1>Hello GraphQL</h1>");
   });
 
-  app.use("/graphql", expressMiddleware(gqlServer));
+  app.use(
+    "/graphql",
+    expressMiddleware(await createGraphqlServer(), {
+      context: async ({ req }) => {
+        const token = req.headers["token"];
+        if (!token) return {};
+        const user = UserService.verifyToken(token as string);
+        return { user };
+      },
+    })
+  );
   app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
   });

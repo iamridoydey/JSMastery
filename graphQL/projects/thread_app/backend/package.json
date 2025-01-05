@@ -12,9 +12,14 @@
   "description": "",
   "dependencies": {
     "@apollo/server": "^4.11.3",
+    "@prisma/client": "^6.1.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.5",
     "express": "^4.21.2",
-    "graphql": "^16.10.0"
+    "graphql": "^16.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.1.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "tsc-watch": "^6.2.1",
